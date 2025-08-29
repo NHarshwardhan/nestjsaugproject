@@ -34,7 +34,7 @@ import { EmployeeModule } from './employee/employee.module';
             imports:[ConfigModule], // load environment variables
             inject:[ConfigService], // provide get() to access .env values
             useFactory:(configService: ConfigService)=>({
-                uri: configService.get<string>('MONGO_URI') //get from .env
+                uri: configService.get<string | undefined>('MONGO_URI') //get from .env
             })
         }),
         OrderModule,
