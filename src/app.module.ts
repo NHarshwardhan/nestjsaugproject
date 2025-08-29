@@ -15,7 +15,7 @@ import { FILE_LOGGER_PROVIDER } from './common/providers/file-logger.provider';
 import { ProductsModule } from './products/products.module';
 import { LoggerModule } from './logger/logger.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { MongooseModule } from '@nestjs/mongoose';
+import { MongooseModule, MongooseModuleFactoryOptions } from '@nestjs/mongoose';
 // import { MongooseModule } from '@nestjs/mongoose';
 import { OrderModule } from './order/order.module';
 import { EmployeeModule } from './employee/employee.module';
@@ -33,8 +33,8 @@ import { EmployeeModule } from './employee/employee.module';
         MongooseModule.forRootAsync({
             imports:[ConfigModule], // load environment variables
             inject:[ConfigService], // provide get() to access .env values
-            useFactory:(configService: ConfigService)=>({
-                uri: configService.get<string | undefined>('MONGO_URI') //get from .env
+            useFactory:(configService: ConfigService): MongooseModuleFactoryOptions =>({
+                uri: configService.get<string>('MONGO_URI') //get from .env
             })
         }),
         OrderModule,
